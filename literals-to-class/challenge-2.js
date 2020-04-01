@@ -23,17 +23,14 @@ const literalB = {
     return this.state.min - this.state.min;
   },
   addNumber(newNum) {
-    // ... code ...
+    if (newNum > this.max) { this.max = newNum }
+    if (newNum < this.min) { this.min = newNum }
   }
 };
 
 // the solution
 
 class MaxMin {
-  constructor(max, min) {
-    this.max = max;
-    this.min = min;
-  }
   state = {
     max: -Infinity,
     min: Infinity

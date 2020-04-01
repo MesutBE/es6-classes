@@ -1,6 +1,6 @@
 # es6-classes/
 
-> 3/31/2020, 3:20:57 PM 
+> 4/1/2020, 2:18:13 PM 
 
 ## literals-to-class/ - error
 
@@ -8,30 +8,33 @@
 
 ### files
 
-* [challenge-1.js](#challenge-1js---error) - error
-* [challenge-2.js](#challenge-2js---error) - error
+* [challenge-1.js](#challenge-1js---pass) - pass
+* [challenge-2.js](#challenge-2js---pass) - pass
 * [challenge-3.js](#challenge-3js---error) - error
 * [challenge-4.js](#challenge-4js---error) - error
 * [example.js](#examplejs---pass) - pass
 
 ---
 
-## challenge-1.js - error
+## challenge-1.js - pass
 
 * [review source](challenge-1.js)
 
 ```txt
-ReferenceError: _ is not defined
-    at Object.<anonymous> ( [...] /literals-to-class/challenge-1.js:27:19)
-    at Module._compile (internal/modules/cjs/loader.js:777:30)
-    at Object.Module._extensions..js (internal/modules/cjs/loader.js:788:10)
-    at Module.load (internal/modules/cjs/loader.js:643:32)
-    at Function.Module._load (internal/modules/cjs/loader.js:556:12)
-    at Module.require (internal/modules/cjs/loader.js:683:19)
-    at require (internal/modules/cjs/helpers.js:16:16)
-    at evaluateFile ( [...] /review.js:101:5)
-    at  [...] /review.js:139:28
-    at Array.map (<anonymous>)
++ PASS: Test 1.A - instanceof
++ PASS: Test 1.B 
++ PASS: Test 2.A - own properties
++ PASS: Test 2.B
++ PASS: Test 3.A - not-own properties
++ PASS: Test 3.B
++ PASS: Test 4.A - evens
++ PASS: Test 4.B
++ PASS: Test 5.A - odds
++ PASS: Test 5.B
++ PASS: Test 6.A - evens
++ PASS: Test 6.B
++ PASS: Test 7.A - odds
++ PASS: Test 7.B
 ```
 
 ```js
@@ -59,10 +62,20 @@ const literalB = {
 
 // the solution
 
-class EvenOdd { };
+class EvenOdd {
+  constructor(num){
+    this.numbers = [...num];
+  }
+  get evens() {
+    return this.numbers.filter(num => num % 2 === 0);
+  }
+  get odds() {
+    return this.numbers.filter(num => num % 2 !== 0);
+  }
+ };
 
-const instanceA = _;
-const instanceB = _;
+const instanceA = new EvenOdd([-1, 1, 0, -2, 2]);
+const instanceB = new EvenOdd([3, 67, -21, 6, -4]);
 
 // the tests
 
@@ -110,28 +123,27 @@ console.assert(test7b, 'Test 7.B');
 
 ---
 
-## challenge-2.js - error
+## challenge-2.js - pass
 
 * [review source](challenge-2.js)
 
 ```txt
 + PASS: Test 1.A - instanceof
 + PASS: Test 1.B 
-- FAIL: Test 2.A - own properties
-- FAIL: Test 2.B
++ PASS: Test 2.A - own properties
++ PASS: Test 2.B
 + PASS: Test 3.A - not-own properties
 + PASS: Test 3.B
-TypeError: Cannot read property 'max' of undefined
-    at Object.<anonymous> ( [...] /literals-to-class/challenge-2.js:54:32)
-    at Module._compile (internal/modules/cjs/loader.js:777:30)
-    at Object.Module._extensions..js (internal/modules/cjs/loader.js:788:10)
-    at Module.load (internal/modules/cjs/loader.js:643:32)
-    at Function.Module._load (internal/modules/cjs/loader.js:556:12)
-    at Module.require (internal/modules/cjs/loader.js:683:19)
-    at require (internal/modules/cjs/helpers.js:16:16)
-    at evaluateFile ( [...] /review.js:101:5)
-    at  [...] /review.js:139:28
-    at Array.map (<anonymous>)
++ PASS: Test 4.A - initial values
++ PASS: Test 4.B
++ PASS: Test 5.A - get spread
++ PASS: Test 5.B
++ PASS: Test 6.A - addNumber
++ PASS: Test 6.B
++ PASS: Test 7.A - get spread
++ PASS: Test 7.B
++ PASS: Test 8.A - addNumber
++ PASS: Test 8.B
 ```
 
 ```js
@@ -146,9 +158,10 @@ const literalA = {
     return this.state.min - this.state.min;
   },
   addNumber(newNum) {
-    // ... code ...
+    if (newNum > this.max) { this.max = newNum }
+    if (newNum < this.min) { this.min = newNum }
   }
-};
+}
 
 const literalB = {
   state: {
@@ -159,13 +172,26 @@ const literalB = {
     return this.state.min - this.state.min;
   },
   addNumber(newNum) {
-    // ... code ...
+    if (newNum > this.max) { this.max = newNum }
+    if (newNum < this.min) { this.min = newNum }
   }
 };
 
 // the solution
 
-class MaxMin { };
+class MaxMin {
+  state = {
+    max: -Infinity,
+    min: Infinity
+  };
+  get spread() {
+    return this.state.max - this.state.min;
+  }
+  addNumber(newNum) {
+    if (newNum > this.state.max) { this.state.max = newNum }
+    if (newNum < this.state.min) { this.state.min = newNum }
+  }
+};
 
 // these two lines are correct! don't change them
 const instanceA = new MaxMin();
@@ -238,12 +264,12 @@ console.assert(test8b, 'Test 8.B');
 - FAIL: Test 4.B
 TypeError: instanceA.write is not a function
     at Object.<anonymous> ( [...] /literals-to-class/challenge-3.js:70:11)
-    at Module._compile (internal/modules/cjs/loader.js:777:30)
-    at Object.Module._extensions..js (internal/modules/cjs/loader.js:788:10)
-    at Module.load (internal/modules/cjs/loader.js:643:32)
-    at Function.Module._load (internal/modules/cjs/loader.js:556:12)
-    at Module.require (internal/modules/cjs/loader.js:683:19)
-    at require (internal/modules/cjs/helpers.js:16:16)
+    at Module._compile (internal/modules/cjs/loader.js:1147:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1167:10)
+    at Module.load (internal/modules/cjs/loader.js:996:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:896:14)
+    at Module.require (internal/modules/cjs/loader.js:1036:19)
+    at require (internal/modules/cjs/helpers.js:72:18)
     at evaluateFile ( [...] /review.js:101:5)
     at  [...] /review.js:139:28
     at Array.map (<anonymous>)
@@ -360,12 +386,12 @@ console.assert(test8b, 'Test 8.B');
 ```txt
 ReferenceError: instanceA is not defined
     at Object.<anonymous> ( [...] /literals-to-class/challenge-4.js:36:16)
-    at Module._compile (internal/modules/cjs/loader.js:777:30)
-    at Object.Module._extensions..js (internal/modules/cjs/loader.js:788:10)
-    at Module.load (internal/modules/cjs/loader.js:643:32)
-    at Function.Module._load (internal/modules/cjs/loader.js:556:12)
-    at Module.require (internal/modules/cjs/loader.js:683:19)
-    at require (internal/modules/cjs/helpers.js:16:16)
+    at Module._compile (internal/modules/cjs/loader.js:1147:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1167:10)
+    at Module.load (internal/modules/cjs/loader.js:996:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:896:14)
+    at Module.require (internal/modules/cjs/loader.js:1036:19)
+    at require (internal/modules/cjs/helpers.js:72:18)
     at evaluateFile ( [...] /review.js:101:5)
     at  [...] /review.js:139:28
     at Array.map (<anonymous>)
