@@ -9,9 +9,10 @@ const literalA = {
     return this.state.min - this.state.min;
   },
   addNumber(newNum) {
-    // ... code ...
+    if (newNum > this.max) { this.max = newNum }
+    if (newNum < this.min) { this.min = newNum }
   }
-};
+}
 
 const literalB = {
   state: {
@@ -22,13 +23,26 @@ const literalB = {
     return this.state.min - this.state.min;
   },
   addNumber(newNum) {
-    // ... code ...
+    if (newNum > this.max) { this.max = newNum }
+    if (newNum < this.min) { this.min = newNum }
   }
 };
 
 // the solution
 
-class MaxMin { };
+class MaxMin {
+  state = {
+    max: -Infinity,
+    min: Infinity
+  };
+  get spread() {
+    return this.state.max - this.state.min;
+  }
+  addNumber(newNum) {
+    if (newNum > this.state.max) { this.state.max = newNum }
+    if (newNum < this.state.min) { this.state.min = newNum }
+  }
+};
 
 // these two lines are correct! don't change them
 const instanceA = new MaxMin();
