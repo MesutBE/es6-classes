@@ -7,10 +7,22 @@ const literal1 = {
     nanys: []
   },
   addString: function (newStr) {
-    // ... code ...
+    if (typeof newStr !== 'string') { return false; }
+
+    if (!isNaN(newStr)) {
+      if (newStr % 2 === 0){
+        this.state.evens.push(newStr);
+      }else {
+        this.state.odds.push(newStr);
+      }
+    }else {
+      this.state.nanys.push(newStr);
+    }
   },
   all: function (selection) {
-    // ... code ...
+    if (selection === 'evens') { return this.state.evens; }
+    if (selection === 'odds') { return this.state.odds; }
+    if (selection === 'nanys') { return this.state.nanys; }
   }
 };
 
@@ -21,15 +33,59 @@ const literal2 = {
     nanys: []
   },
   addString: function (newStr) {
-    // ... code ...
+    if (typeof newStr !== 'string') { return false; }
+
+    if (!isNaN(newStr)) {
+      if (newStr % 2 === 0) {
+        this.state.evens.push(newStr);
+      } else {
+        this.state.odds.push(newStr);
+      }
+    } else {
+      this.state.nanys.push(newStr);
+    }
   },
   all: function (selection) {
-    // ... code ...
+    if (selection === 'evens') { return this.state.evens; }
+    if (selection === 'odds') { return this.state.odds; }
+    if (selection === 'nanys') { return this.state.nanys; }
   }
 };
 
 // the solution
+class Stringanizer {
+  constructor (values){
+    this.state = values;
+  }
+  state = {
+    evens: [],
+    odds: [],
+    nanys: []
+  }
+  addString(newStr) {
+    if (typeof newStr !== 'string') { return false; }
 
+    if (!isNaN(newStr)) {
+      if (newStr % 2 === 0) {
+        this.state.evens.push(newStr);
+      } else {
+        this.state.odds.push(newStr);
+      }
+    } else {
+      this.state.nanys.push(newStr);
+    }
+  }
+  all(selection) {
+    if (selection === 'evens') { return this.state.evens; }
+    if (selection === 'odds') { return this.state.odds; }
+    if (selection === 'nanys') { return this.state.nanys; }
+  }
+}
+
+// const instanceA = new Stringanizer(["2", "", "3", "e"]);
+const instanceA = new Stringanizer({"evens":["2",""],"odds":["3"],"nanys":["e"]});
+
+const instanceB = new Stringanizer({"evens":["-0"],"odds":["5"],"nanys":["!"]});
 
 // the tests
 
