@@ -6,20 +6,20 @@ const literalA = {
     sa: 67
   },
   write: function (key, value) {
-    // ... code ...
+   this.entries[key] = value;
   },
   read: function (key) {
     if (this.entries.hasOwnProperty(key)) {
-      // ... code ...
+      return this.entries[key];
     } else {
-      // ... code ...
+      return `no key: ${key}`
     }
   },
   remove: function (key) {
     if (this.entries.hasOwnProperty(key)) {
-      // ... code ...
+      return delete this.entries[key];
     } else {
-      // ... code ...
+      return `no key: ${key}`
     }
   }
 };
@@ -39,7 +39,27 @@ const literalB = {
 
 // the solution
 
-class EntriesManager { };
+class EntriesManager {
+  constructor(value = {}){
+    this.entries = value;
+  }
+  entries = {}
+  write(key, value) {
+    this.entries[key] = value;
+  }
+  read (key){
+    if (this.entries.hasOwnProperty(key)) 
+    { return this.entries[key]; }
+    
+    throw new Error(`no key: ${key}`);
+  }
+  remove (key){
+    if (this.entries.hasOwnProperty(key)) 
+    { return delete this.entries[key]; }
+    
+    return false;
+  }
+};
 
 // these two lines are correct!  don't change them
 const instanceA = new EntriesManager({ a: 1, b: 2 });
