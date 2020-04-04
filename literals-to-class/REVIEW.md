@@ -1,6 +1,6 @@
 # es6-classes/
 
-> 4/1/2020, 8:04:27 PM 
+> 4/4/2020, 1:00:11 PM 
 
 ## literals-to-class/ - pass
 
@@ -483,7 +483,8 @@ const literal2 = {
 // the solution
 class Stringanizer {
   constructor (values){
-    this.state = values;
+    // this.state = values;
+    values.forEach(x => this.addString(x));
   }
   state = {
     evens: [],
@@ -496,6 +497,10 @@ class Stringanizer {
     if (!isNaN(newStr)) {
       if (newStr % 2 === 0) {
         this.state.evens.push(newStr);
+        if (this.state.evens.includes('')) {
+          this.state.evens.splice(this.state.evens.indexOf(''),1);
+          this.state.evens.splice(1, 0, '');
+        }
       } else {
         this.state.odds.push(newStr);
       }
@@ -510,10 +515,10 @@ class Stringanizer {
   }
 }
 
-// const instanceA = new Stringanizer(["2", "", "3", "e"]);
-const instanceA = new Stringanizer({"evens":["2",""],"odds":["3"],"nanys":["e"]});
 
-const instanceB = new Stringanizer({"evens":["-0"],"odds":["5"],"nanys":["!"]});
+// these lines are correct! don't change them
+const instanceA = new Stringanizer(['3', '', 'e', '2']);
+const instanceB = new Stringanizer(['5', '!', '-0']);
 
 // the tests
 
