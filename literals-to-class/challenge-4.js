@@ -33,17 +33,33 @@ const literal2 = {
     nanys: []
   },
   addString: function (newStr) {
-    if (typeof newStr !== 'string') { return false; }
+    // if (typeof newStr !== 'string') { return false; }
 
-    if (!isNaN(newStr)) {
-      if (newStr % 2 === 0) {
-        this.state.evens.push(newStr);
-      } else {
-        this.state.odds.push(newStr);
-      }
-    } else {
-      this.state.nanys.push(newStr);
+    // if (!isNaN(newStr)) {
+    //   if (newStr % 2 === 0) {
+    //     this.state.evens.push(newStr);
+    //   } else {
+    //     this.state.odds.push(newStr);
+    //   }
+    // } else {
+    //   this.state.nanys.push(newStr);
+    // }
+
+    if (typeof newStr !== 'string') {
+      return;
     }
+
+    if (Number.isNaN(Number(newStr))) {
+      this.state.nanys.push(newStr);
+      return;
+    }
+
+    if (value % 2 === 0) {
+      this.state.evens.push(newStr);
+      return;
+    }
+
+    this.state.odds.push(newStr);
   },
   all: function (selection) {
     if (selection === 'evens') { return this.state.evens; }
