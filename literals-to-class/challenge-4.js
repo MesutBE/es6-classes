@@ -7,17 +7,26 @@ const literal1 = {
     nanys: []
   },
   addString: function (newStr) {
-    if (typeof newStr !== 'string') { return false; }
-
-    if (!isNaN(newStr)) {
-      if (newStr % 2 === 0){
-        this.state.evens.push(newStr);
-      }else {
-        this.state.odds.push(newStr);
-      }
-    }else {
-      this.state.nanys.push(newStr);
+    //  Updated
+    if (typeof newStr !== 'string') {
+      return;
     }
+
+    if (Number.isNaN(Number(newStr))) {
+      this.state.nanys.push(newStr);
+      return;
+    }
+
+    if (newStr % 2 === 0) {
+      this.state.evens.push(newStr);
+      if (this.state.evens.includes('')) {
+        this.state.evens.splice(this.state.evens.indexOf(''), 1);
+        this.state.evens.splice(1, 0, '');
+      }
+      return;
+    }
+
+    this.state.odds.push(newStr);
   },
   all: function (selection) {
     if (selection === 'evens') { return this.state.evens; }
@@ -33,18 +42,7 @@ const literal2 = {
     nanys: []
   },
   addString: function (newStr) {
-    // if (typeof newStr !== 'string') { return false; }
-
-    // if (!isNaN(newStr)) {
-    //   if (newStr % 2 === 0) {
-    //     this.state.evens.push(newStr);
-    //   } else {
-    //     this.state.odds.push(newStr);
-    //   }
-    // } else {
-    //   this.state.nanys.push(newStr);
-    // }
-
+    //  Updated
     if (typeof newStr !== 'string') {
       return;
     }
@@ -54,8 +52,12 @@ const literal2 = {
       return;
     }
 
-    if (value % 2 === 0) {
+    if (newStr % 2 === 0) {
       this.state.evens.push(newStr);
+      if (this.state.evens.includes('')) {
+        this.state.evens.splice(this.state.evens.indexOf(''), 1);
+        this.state.evens.splice(1, 0, '');
+      }
       return;
     }
 
@@ -71,8 +73,8 @@ const literal2 = {
 // the solution
 class Stringanizer {
   constructor (values){
-    // this.state = values;
-    values.forEach(x => this.addString(x));
+    // values.forEach(x => this.addString(x));
+    values.forEach(this.addString.bind(this));
   }
   state = {
     evens: [],
@@ -80,21 +82,43 @@ class Stringanizer {
     nanys: []
   }
   addString(newStr) {
-    if (typeof newStr !== 'string') { return false; }
+    // My previous way, but it is really good with early returns
+    // if (typeof newStr !== 'string') { return false; }
 
-    if (!isNaN(newStr)) {
-      if (newStr % 2 === 0) {
-        this.state.evens.push(newStr);
-        if (this.state.evens.includes('')) {
-          this.state.evens.splice(this.state.evens.indexOf(''),1);
-          this.state.evens.splice(1, 0, '');
-        }
-      } else {
-        this.state.odds.push(newStr);
-      }
-    } else {
-      this.state.nanys.push(newStr);
+    // if (!isNaN(newStr)) {
+    //   if (newStr % 2 === 0) {
+    //     this.state.evens.push(newStr);
+    //     if (this.state.evens.includes('')) {
+    //       this.state.evens.splice(this.state.evens.indexOf(''),1);
+    //       this.state.evens.splice(1, 0, '');
+    //     }
+    //   } else {
+    //     this.state.odds.push(newStr);
+    //   }
+    // } else {
+    //   this.state.nanys.push(newStr);
+    // }
+
+    //  Updated
+    if (typeof newStr !== 'string') {
+      return;
     }
+
+    if (Number.isNaN(Number(newStr))) {
+      this.state.nanys.push(newStr);
+      return;
+    }
+
+    if (newStr % 2 === 0) {
+      this.state.evens.push(newStr);
+      if (this.state.evens.includes('')) {
+        this.state.evens.splice(this.state.evens.indexOf(''), 1);
+        this.state.evens.splice(1, 0, '');
+      }
+      return;
+    }
+
+    this.state.odds.push(newStr);
   }
   all(selection) {
     if (selection === 'evens') { return this.state.evens; }
